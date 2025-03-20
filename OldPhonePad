@@ -1,0 +1,111 @@
+import java.util.Scanner;
+import java.util.Arrays;
+
+class Main
+{
+    public static String OldPhonePad(String input)
+    {
+        int l = input.length();
+        int a = 0;
+        char[] c = input.toCharArray();
+        StringBuilder s = new StringBuilder();
+        char prevChar = ' ';
+        int count = 0;
+        
+        for(int i = 0; i < l; i++)
+        {
+            if (c[i] == '#') break;
+            
+            if (c[i] == '*') 
+            {
+                if (count > 0) 
+                {
+                    count = 0; // Reset sequence
+                } 
+                else if (s.length() > 0) 
+                {
+                    s.deleteCharAt(s.length() - 1);
+                }
+                prevChar = ' ';
+                continue;
+            }
+            
+            if (c[i] == ' ') 
+            {
+                if (prevChar != ' ' && prevChar != '*') 
+                {
+                    switch (prevChar - '0') 
+                    {
+                        case 2: s.append("ABC".charAt((count - 1) % 3)); break;
+                        case 3: s.append("DEF".charAt((count - 1) % 3)); break;
+                        case 4: s.append("GHI".charAt((count - 1) % 3)); break;
+                        case 5: s.append("JKL".charAt((count - 1) % 3)); break;
+                        case 6: s.append("MNO".charAt((count - 1) % 3)); break;
+                        case 7: s.append("PQRS".charAt((count - 1) % 4)); break;
+                        case 8: s.append("TUV".charAt((count - 1) % 3)); break;
+                        case 9: s.append("WXYZ".charAt((count - 1) % 4)); break;
+                        case 0: s.append(' '); break;
+                    }
+                }
+                prevChar = ' ';
+                count = 0;
+                continue;
+            }
+            
+            a = c[i] - '0';
+            if (a == 1) continue; 
+            
+            if (c[i] == prevChar) 
+            {
+                count++;
+            } 
+            else 
+            {
+                if (prevChar != ' ' && prevChar != '*') 
+                {
+                    switch (prevChar - '0') 
+                    {
+                        case 2: s.append("ABC".charAt((count - 1) % 3)); break;
+                        case 3: s.append("DEF".charAt((count - 1) % 3)); break;
+                        case 4: s.append("GHI".charAt((count - 1) % 3)); break;
+                        case 5: s.append("JKL".charAt((count - 1) % 3)); break;
+                        case 6: s.append("MNO".charAt((count - 1) % 3)); break;
+                        case 7: s.append("PQRS".charAt((count - 1) % 4)); break;
+                        case 8: s.append("TUV".charAt((count - 1) % 3)); break;
+                        case 9: s.append("WXYZ".charAt((count - 1) % 4)); break;
+                        case 0: s.append(' '); break; // Space for 0
+                    }
+                }
+                count = 1;
+                prevChar = c[i];
+            }
+        }
+        
+        if (prevChar != ' ' && prevChar != '*' && prevChar != '#') 
+        {
+            switch (prevChar - '0') 
+            {
+                case 2: s.append("ABC".charAt((count - 1) % 3)); break;
+                case 3: s.append("DEF".charAt((count - 1) % 3)); break;
+                case 4: s.append("GHI".charAt((count - 1) % 3)); break;
+                case 5: s.append("JKL".charAt((count - 1) % 3)); break;
+                case 6: s.append("MNO".charAt((count - 1) % 3)); break;
+                case 7: s.append("PQRS".charAt((count - 1) % 4)); break;
+                case 8: s.append("TUV".charAt((count - 1) % 3)); break;
+                case 9: s.append("WXYZ".charAt((count - 1) % 4)); break;
+                case 0: s.append(' '); break;
+            }
+        }
+        
+        return s.toString();
+    }
+    
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter numeric input ending with #: ");
+        String s = sc.nextLine();
+        String l = OldPhonePad(s);
+        System.out.println(l);
+    }
+}
