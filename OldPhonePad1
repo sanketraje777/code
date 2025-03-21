@@ -1,0 +1,110 @@
+// Online C# Editor for free
+// Write, Edit and Run your C# code using C# Online Compiler
+
+using System;
+using System.Text;
+class Program
+{
+    public static string OldPhonePad(string input)
+    {
+        int l=input.Length;
+        int a=0;
+        char[] c=input.ToCharArray();
+        StringBuilder s=new StringBuilder();
+        char prevChar=' ';
+        int count=0;
+
+        for(int i=0; i<l; i++)
+        {
+            if(c[i]=='#') break;
+
+            if(c[i]=='*')
+            {
+                if(count>0)
+                {
+                    count=0; // Reset sequence
+                }
+                else if(s.Length>0)
+                {
+                    s.Remove(s.Length-1,1);
+                }
+                prevChar=' ';
+                continue;
+            }
+
+            if(c[i]==' ')
+            {
+                if(prevChar!=' ' && prevChar!='*')
+                {
+                    switch(prevChar-'0')
+                    {
+                        case 2: s.Append("ABC"[(count-1) % 3]); break;
+                        case 3: s.Append("DEF"[(count-1) % 3]); break;
+                        case 4: s.Append("GHI"[(count-1) % 3]); break;
+                        case 5: s.Append("JKL"[(count-1) % 3]); break;
+                        case 6: s.Append("MNO"[(count-1) % 3]); break;
+                        case 7: s.Append("PQRS"[(count-1) % 4]); break;
+                        case 8: s.Append("TUV"[(count-1) % 3]); break;
+                        case 9: s.Append("WXYZ"[(count-1) % 4]); break;
+                        case 0: s.Append(' '); break;
+                    }
+                }
+                prevChar=' ';
+                count=0;
+                continue;
+            }
+
+            a=c[i]-'0';
+            if(a==1) continue;
+
+            if(c[i]==prevChar)
+            {
+                count++;
+            }
+            else
+            {
+                if(prevChar!=' ' && prevChar!='*')
+                {
+                    switch(prevChar-'0')
+                    {
+                        case 2: s.Append("ABC"[(count-1) % 3]); break;
+                        case 3: s.Append("DEF"[(count-1) % 3]); break;
+                        case 4: s.Append("GHI"[(count-1) % 3]); break;
+                        case 5: s.Append("JKL"[(count-1) % 3]); break;
+                        case 6: s.Append("MNO"[(count-1) % 3]); break;
+                        case 7: s.Append("PQRS"[(count-1) % 4]); break;
+                        case 8: s.Append("TUV"[(count-1) % 3]); break;
+                        case 9: s.Append("WXYZ"[(count-1) % 4]); break;
+                        case 0: s.Append(' '); break; // Space for 0
+                    }
+                }
+                count=1;
+                prevChar=c[i];
+            }
+        }
+        if(prevChar!=' ' && prevChar!='*' && prevChar!='#')
+        {
+            switch(prevChar-'0')
+            {
+                case 2: s.Append("ABC"[(count-1) % 3]); break;
+                case 3: s.Append("DEF"[(count-1) % 3]); break;
+                case 4: s.Append("GHI"[(count-1) % 3]); break;
+                case 5: s.Append("JKL"[(count-1) % 3]); break;
+                case 6: s.Append("MNO"[(count-1) % 3]); break;
+                case 7: s.Append("PQRS"[(count-1) % 4]); break;
+                case 8: s.Append("TUV"[(count-1) % 3]); break;
+                case 9: s.Append("WXYZ"[(count-1) % 4]); break;
+                case 0: s.Append(' '); break; // Space for 0
+            }
+        }
+        return s.ToString();
+    }
+    
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Enter numeric input ending with #: ");
+        string s = Console.ReadLine();
+        string l = OldPhonePad(s);
+        Console.WriteLine(l);
+    }
+}
